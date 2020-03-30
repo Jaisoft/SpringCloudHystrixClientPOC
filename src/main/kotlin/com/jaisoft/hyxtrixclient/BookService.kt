@@ -8,14 +8,14 @@ import java.net.URI
 @Service
 class BookService(val restTemplate : RestTemplate) {
 
-    @HystrixCommand(fallbackMethod = "reliable")
+    @HystrixCommand(fallbackMethod = "fallbackMethod")
     fun readingList(): String? {
         val uri = URI.create("http://localhost:8090/recommended")
 
         return this.restTemplate.getForObject(uri, String::class.java)
     }
 
-    fun reliable(): String {
+    fun fallbackMethod(): String {
         return "Cloud Native Java (O'Reilly)"
     }
 
